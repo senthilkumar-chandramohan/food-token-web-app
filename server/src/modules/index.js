@@ -1,5 +1,6 @@
-import { sendToken } from "./contract-interaction.js";
+import { sendToken, getBalance } from "./contract-interaction.js";
 
 export {
     sendToken,
+    getBalance,
 };

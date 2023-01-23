@@ -1,0 +1,79 @@
+body {
+  background-color: #1D2737;
+}
+
+.filter-white{
+  filter: invert(94%) sepia(91%) saturate(1593%) hue-rotate(181deg) brightness(126%) contrast(90%);
+}
+
+.main-menu {
+  color: #f2f2f2;
+}
+.main-menu div.tile {
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.wallet-address {
+  padding: 2.5rem 1rem;
+}
+
+.wallet-address input {
+  width: 100%;
+  color: #1D2737;
+  border: solid 1px #1D2737;
+  border-radius: 20px;
+  padding: 5px 10px; 
+  text-align: center;
+}
+
+.copy-address {
+  border: 0;
+  height: 24px;
+  width: 24px;
+  background: url("http://localhost:3000/images/icons/copy.png") no-repeat;
+  background-size: 24px 24px;
+  right: 32px;
+  position: absolute;
+  top: 29px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #1D2737;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

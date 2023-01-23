@@ -43,6 +43,24 @@ const sendToken = async (receiver, amount) => {
     return receipt;
 };
 
+const getBalance = async (address) => {
+    const web3 = getWeb3Instance();
+    const networkId = await web3.eth.net.getId();
+    const {
+        abi,
+        networks,
+    } = constants.CONTRACT_JSON;
+
+    const contract = new web3.eth.Contract(
+        abi,
+        networks[networkId].address,
+    );
+
+    const balance = await contract.methods.getBalance(address).call();
+    return balance;
+};
+
 export {
     sendToken,
-}
+    getBalance,
+};
