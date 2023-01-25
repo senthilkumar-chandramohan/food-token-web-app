@@ -1,14 +1,7 @@
 import { getWeb3Instance, constants } from "../utils/index.js";
 
-const sendToken = async (receiver, amount) => {
+const sendToken = async (sender, receiver, amount, note) => {
     const web3 = getWeb3Instance();
-    // const createTransaction = await web3.eth.accounts.signTransaction({
-    //     from: constants.FROM_ADDRESS,
-    //     to: receiver,
-    //     value: 0,
-    //     gas: 21000,
-    // }, constants.PRIVATE_KEY);
-
     const networkId = await web3.eth.net.getId();
     const {
         abi,
@@ -21,10 +14,11 @@ const sendToken = async (receiver, amount) => {
     );
 
     const txn = contract.methods.sendCoin(receiver, amount);
-    const gas = await txn.estimateGas({ from: constants.FROM_ADDRESS });
+    // TODO: update contract to accept sender const txn = contract.methods.sendCoin(sender, receiver, amount);
+    const gas = await txn.estimateGas({ from: constants.SYSTEM_WALLET });
     const gasPrice = await web3.eth.getGasPrice();
     const data = txn.encodeABI();
-    const nonce = await web3.eth.getTransactionCount(constants.FROM_ADDRESS);
+    const nonce = await web3.eth.getTransactionCount(constants.SYSTEM_WALLET);
 
     console.log('\n gas:', gas);
     console.log('\n gasPrice:', gasPrice);

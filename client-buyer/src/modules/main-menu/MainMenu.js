@@ -22,8 +22,12 @@ function MainMenu() {
                     </a>
                 </div>
                 <div className="col-sm-4 col-xs-6 tile">
-                    <img src="/images/icons/mobile.svg" className="filter-white" height={64} width={64} />
-                    <p>Pay Phone Number</p>
+                    <a onClick={()=>{
+                        navigate("/generate-qrc");
+                    }}>
+                        <img src="/images/icons/mobile.svg" className="filter-white" height={64} width={64} />
+                        <p>Generate QRC</p>
+                    </a>
                 </div>
                 <div className="col-sm-4 col-xs-6 tile">
                     <img src="/images/icons/people.svg" className="filter-white" height={64} width={64} />
@@ -36,7 +40,7 @@ function MainMenu() {
             </div>
             <div className="row">
                 <div className="col-sm-12">
-                    <WalletAddress address="0x1aa9698D553Cce1ACB50b069e7Cfb674cAaA4de3" />
+                    <WalletAddress prefixMessage="Your Address" address="0x1aa9698D553Cce1ACB50b069e7Cfb674cAaA4de3" />
                 </div>
             </div>
             <div className="row">

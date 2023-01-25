@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import QrcReader from 'react-qr-scanner';
-import QRCode from 'react-qr-code';
+import SendTokens from '../send-tokens/SendTokens';
 
 function ScanQRC() {
-    const [address, setAddress] = useState(null);
+    const qrReader = useRef(null);
+    const [scanData, setScanData] = useState(null);
 
     function handleScan(result) {
         console.log('result', result);
         if (result) {
-            setAddress(result?.text);
+            setScanData(JSON.parse(result?.text));
         }
     }
 
@@ -16,27 +17,39 @@ function ScanQRC() {
         console.error(err);
     }
 
+    // const openImageDialog = () => {
+    //     console.log(qrReader);
+    //     qrReader.current.openImageDialog();
+    // }
+
     const previewStyle = {
-        height: 240,
-        width: 240,
+        width: '100%',
     }
-  
-    if (address && address.length) {
-        return (
-            <div style={{ background: 'white', padding: '16px' }}>
-                <QRCode value={address} />
-            </div>
-        )
+
+    if (scanData) {
+        const {
+            address,
+            sellerName,
+            amount,
+        } = scanData;
+    
+        if (address && address.length) {
+            return (
+                <SendTokens sellerAddress={address} sellerName={sellerName} amount={amount} />
+            )
+        }
     }
 
     return (
         <div>
             <QrcReader
-            delay={10000}
-            style={previewStyle}
-            onError={handleError}
-            onScan={handleScan}
+                delay={1000}
+                style={previewStyle}
+                onError={handleError}
+                onScan={handleScan}
+                legacyMode={true}
             />
+            {/* <button id="uploadFromGallery" onClick={openImageDialog}>Upload QR Image</button> */}
         </div>
     )
 }

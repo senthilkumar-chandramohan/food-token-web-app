@@ -1,5 +1,6 @@
 body {
   background-color: #1D2737;
+  color: #f2f2f2;
 }
 
 .filter-white{
@@ -17,6 +18,7 @@ body {
 
 .wallet-address {
   padding: 2.5rem 1rem;
+  position: relative;
 }
 
 .wallet-address input {
@@ -37,6 +39,53 @@ body {
   right: 32px;
   position: absolute;
   top: 29px;
+}
+
+.send-tokens {
+  color: #f2f2f2;
+}
+
+.send-tokens input {
+  display: block;
+  margin: 10px auto;
+}
+
+.send-tokens input.amount {
+  display: inline-block;
+  background: none;
+  border: 0;
+  font-size: 3rem;
+  width: 150px;
+  text-align: center;
+}
+
+.send-tokens input.note {
+  font-size: 2rem;
+  background: none;
+  border: solid 1px grey;
+  padding: 5px 15px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.send-tokens button.pay {
+  font-size: 2rem;
+  background: blueviolet;
+  border: 0;
+  border-radius: 20px;
+  padding: 10px 40px;
+  font-weight: normal;
+  margin-top: 30px;
+}
+
+.send-tokens a.cancel {
+  display: block;
+  margin-top: 15px;
+  font-size: 2rem;
+}
+
+.token-logo {
+  font-size: 3rem;
 }
 
 .App {

@@ -1,6 +1,6 @@
 function WalletAddress(props) {
-    const { address } = props;
-    const dispAddress = `Your Address: ${address.substring(0, 8)}...${address.substr(35)}`;
+    const { address, prefixMessage } = props;
+    const dispAddress = `${prefixMessage}: ${address.substring(0, 8)}...${address.substr(35)}`;
 
     const copyToClipboard = (el) => {
         const copyText = el.target.getAttribute('data-address');

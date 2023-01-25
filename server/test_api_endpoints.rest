@@ -1,0 +1,9 @@
+POST http://localhost:3001/send-token
+Content-Type: application/json
+
+{
+    "fromAddress": "0xd29eB4F7693ee0AF2FA68747743A9A8910813d6e",
+    "toAddress": "0x9f7e7c6f2114C114bA070C82e30901aE6526F673",
+    "amount": 10,
+    "note": "Vadai"
+}

@@ -1,10 +1,10 @@
 import CONTRACT_JSON from "./resources/MetaCoin.json" assert { type: "json" };
 
-const FROM_ADDRESS = '0x8cD2CF9e38DE42ffDC749BfCA6b7376B26F95109';
-const PRIVATE_KEY = process.env.PRIVATE_KEY || '231d2cacf0ce6edf8973234d3d33d20a62214023c76e0fcccc95aaaa3163e32a';
+const SYSTEM_WALLET = '0xd29eB4F7693ee0AF2FA68747743A9A8910813d6e';
+const PRIVATE_KEY = process.env.PRIVATE_KEY || '474a4917bf23caefe40a3eba19c96e154c742cda7bb9228ee1ccd4e1607903c5';
 
 export {
-    FROM_ADDRESS,
+    SYSTEM_WALLET,
     PRIVATE_KEY,
     CONTRACT_JSON,
 };
