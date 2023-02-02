@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import WalletAddress from "../wallet-address/WalletAddress";
 import PaymentSuccess from "../payment-success/PaymentSuccess";
 
 const SendTokens = (props) => {
     const [success, setSuccess] = useState(null);
     const navigate = useNavigate();
     const {
-        sellerAddress,
+        accountID,
         sellerName,
         amount = '',
     } = props;
@@ -15,23 +14,24 @@ const SendTokens = (props) => {
     const paySeller = () => {
         const note = document.getElementById('note').value;
 
-        fetch('http://localhost:3001/send-token', {
+        fetch('https://192.168.0.112:443/send-token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                toAddress: sellerAddress,
+                fromAccountID: window.localStorage.getItem('accountID'),
+                toAccountID: accountID,
                 amount,
                 note,
-            })
+            }),
         }).then((response) => {
             console.log(response);
             setSuccess(true);
         }).catch((err) => {
             setSuccess(false);
             console.log(err);
-        })
+        });
     }
 
     if (success) {
@@ -46,7 +46,6 @@ const SendTokens = (props) => {
                 :<></>
             }
             <h3>Paying {sellerName}</h3>
-            <WalletAddress prefixMessage="Seller Address" address={sellerAddress} />
             <span class="token-logo">₹</span><input type="number" className="amount" defaultValue={amount} />
             <input type="text" class="note" id="note" placeholder="Add a note" />
             <button id="sendTokens" class="pay" onClick={paySeller}>Pay</button>

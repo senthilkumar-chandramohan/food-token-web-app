@@ -13,7 +13,7 @@ const sendToken = async (sender, receiver, amount, note) => {
         networks[networkId].address,
     );
 
-    const txn = contract.methods.sendCoin(receiver, amount);
+    const txn = contract.methods.sendCoin(sender, receiver, amount);
     // TODO: update contract to accept sender const txn = contract.methods.sendCoin(sender, receiver, amount);
     const gas = await txn.estimateGas({ from: constants.SYSTEM_WALLET });
     const gasPrice = await web3.eth.getGasPrice();

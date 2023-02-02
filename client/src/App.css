@@ -10,6 +10,7 @@ body {
 .main-menu {
   color: #f2f2f2;
 }
+
 .main-menu div.tile {
   cursor: pointer;
   padding-top: 10px;
@@ -86,6 +87,11 @@ body {
 
 .token-logo {
   font-size: 3rem;
+}
+
+.set-phone-no input, .set-phone-no button {
+  color: #1D2737 !important;
+
 }
 
 .App {
