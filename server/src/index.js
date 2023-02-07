@@ -16,8 +16,8 @@ const app = express();
 const port = process.env.port || 3001;
 
 const options = {
-  key: fs.readFileSync('D:/Projects/ETH/food-token-web-app/server/src/client-key.pem'),
-  cert: fs.readFileSync('D:/Projects/ETH/food-token-web-app/server/src/client-cert.pem')
+  key: fs.readFileSync(__dirname + '\\test\\fixtures\\keys\\client-key.pem'),
+  cert: fs.readFileSync(__dirname + '\\test\\fixtures\\keys\\client-cert.pem'),
 };
 
 app.use(express.json());
@@ -40,6 +40,9 @@ app.post("/send-token", async (req, res) => {
   const fromWalletAddress = ACCOUNT_WALLET_MAP[fromAccountID];
   const toWalletAddress = ACCOUNT_WALLET_MAP[toAccountID];
 
+  console.log("fromWallet", fromWalletAddress);
+  console.log("toWallet", toWalletAddress);
+
   const receipt = await sendToken(fromWalletAddress, toWalletAddress, amount, note);
   res.json(receipt);
 });
@@ -47,6 +50,7 @@ app.post("/send-token", async (req, res) => {
 app.get("/get-balance", async (req, res) => {
   const accountID = req.query.accountID;
   const walletAddress = ACCOUNT_WALLET_MAP[accountID];
+  console.log(walletAddress);
   const balance = await getBalance(walletAddress);
   res.json({ balance });
 });

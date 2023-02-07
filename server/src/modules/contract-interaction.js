@@ -1,19 +1,17 @@
+import dotenv from "dotenv";
 import { getWeb3Instance, constants } from "../utils/index.js";
+
+dotenv.config();
 
 const sendToken = async (sender, receiver, amount, note) => {
     const web3 = getWeb3Instance();
-    const networkId = await web3.eth.net.getId();
-    const {
-        abi,
-        networks,
-    } = constants.CONTRACT_JSON;
 
     const contract = new web3.eth.Contract(
-        abi,
-        networks[networkId].address,
+        constants.CONTRACT_ABI,
+        constants.CONTRACT_ADDRESS,
     );
 
-    const txn = contract.methods.sendCoin(sender, receiver, amount);
+    const txn = contract.methods.transferFrom(sender, receiver, amount);
     // TODO: update contract to accept sender const txn = contract.methods.sendCoin(sender, receiver, amount);
     const gas = await txn.estimateGas({ from: constants.SYSTEM_WALLET });
     const gasPrice = await web3.eth.getGasPrice();
@@ -30,7 +28,7 @@ const sendToken = async (sender, receiver, amount, note) => {
         gas,
         gasPrice,
         nonce,
-        chainId: networkId,
+        chainId: 5,
     }, constants.PRIVATE_KEY);
 
     const receipt = await web3.eth.sendSignedTransaction(signedTxn.rawTransaction);
@@ -39,18 +37,13 @@ const sendToken = async (sender, receiver, amount, note) => {
 
 const getBalance = async (address) => {
     const web3 = getWeb3Instance();
-    const networkId = await web3.eth.net.getId();
-    const {
-        abi,
-        networks,
-    } = constants.CONTRACT_JSON;
 
     const contract = new web3.eth.Contract(
-        abi,
-        networks[networkId].address,
+        constants.CONTRACT_ABI,
+        constants.CONTRACT_ADDRESS,
     );
 
-    const balance = await contract.methods.getBalance(address).call();
+    const balance = await contract.methods.balanceOf(address).call();
     return balance;
 };
 

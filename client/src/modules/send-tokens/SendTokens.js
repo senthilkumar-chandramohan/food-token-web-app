@@ -14,7 +14,7 @@ const SendTokens = (props) => {
     const paySeller = () => {
         const note = document.getElementById('note').value;
 
-        fetch('https://192.168.0.112:443/send-token', {
+        fetch('http://localhost:3001/send-token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

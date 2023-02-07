@@ -7,3 +7,6 @@ Content-Type: application/json
     "amount": 10,
     "note": "Vadai"
 }
+
+GET https://localhost:443/get-balance?accountID=9962589489
+Content-Type: application/json
