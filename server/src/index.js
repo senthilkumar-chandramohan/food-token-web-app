@@ -6,7 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { sendToken, getBalance } from './modules/index.js';
+import { sendToken, getBalance, getTransactionHistory } from './modules/index.js';
 import { ACCOUNT_WALLET_MAP } from './utils/constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +53,14 @@ app.get("/get-balance", async (req, res) => {
   console.log(walletAddress);
   const balance = await getBalance(walletAddress);
   res.json({ balance });
+});
+
+app.get("/get-txn-history", async (req, res) => {
+  const accountID = req.query.accountID;
+  const walletAddress = ACCOUNT_WALLET_MAP[accountID];
+  console.log(walletAddress);
+  const txnHistory = await getTransactionHistory(walletAddress);
+  res.json({ txnHistory });
 });
 
 // app.listen(port, () => {

@@ -7,7 +7,7 @@ const ViewBalance = () => {
         const accountID = window.localStorage.getItem('accountID');
         console.log(window.localStorage);
 
-        fetch(`http://localhost:3001/get-balance?accountID=${accountID}`, {
+        fetch(`https://192.168.0.112:443/get-balance?accountID=${accountID}`, {
             method: 'GET',
         }).then((response) => {
             response.json().then(parsedJson => {

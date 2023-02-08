@@ -47,7 +47,28 @@ const getBalance = async (address) => {
     return balance;
 };
 
+const getTransactionHistory = async (address) => {
+    const apiKey="VVCPGMJQZ2IZ2FQUT7K79HS2K4SEA6AVB9";
+    const reqUrl=`https://api-goerli.etherscan.io/api?module=account&action=tokentx&address=${address}&sort=asc&apikey=${apiKey}`;
+
+    const response = await fetch(reqUrl, { method: 'GET' });
+    const responseJSON = await response.json();
+
+    console.log(responseJSON);
+    return responseJSON;
+        
+        // .then((response) => {
+        //     response.json().then(parsedJson => {
+        //         // code that can access both here
+        //         console.log(parsedJson);
+        //     })            
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
+}
+
 export {
     sendToken,
     getBalance,
+    getTransactionHistory,
 };

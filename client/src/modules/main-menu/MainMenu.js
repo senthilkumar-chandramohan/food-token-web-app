@@ -51,8 +51,12 @@ function MainMenu() {
                     </a>
                 </div>
                 <div className="col-xs-6 tile">
-                    <img src="/images/icons/transactions.svg" className="filter-white" height={64} width={64} />
-                    <p>View Transactions</p>
+                    <a onClick={()=>{
+                        navigate("/view-transactions");
+                    }}>
+                        <img src="/images/icons/transactions.svg" className="filter-white" height={64} width={64} />
+                        <p>View Transactions</p>
+                    </a>
                 </div>
             </div>
         </div>
