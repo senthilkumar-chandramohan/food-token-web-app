@@ -15,6 +15,12 @@ const getWeb3Instance = () => {
     return web3Instance;
 }
 
+const getBigNumber = (number) => {
+    const web3 = getWeb3Instance();
+    return web3.utils.toBN(number);
+}
+
 export {
     getWeb3Instance,
+    getBigNumber,
 };

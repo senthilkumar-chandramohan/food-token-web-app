@@ -13,6 +13,7 @@ const SendTokens = (props) => {
 
     const paySeller = () => {
         const note = document.getElementById('note').value;
+        const amount = document.getElementById('amount').value;
 
         fetch('https://192.168.0.112:443/send-token', {
             method: 'POST',
@@ -46,7 +47,7 @@ const SendTokens = (props) => {
                 :<></>
             }
             <h3>Paying {sellerName}</h3>
-            <span class="token-logo">₹</span><input type="number" className="amount" defaultValue={amount} />
+            <span class="token-logo">₹</span><input type="number" id="amount" className="amount" defaultValue={amount} />
             <input type="text" class="note" id="note" placeholder="Add a note" />
             <button id="sendTokens" class="pay" onClick={paySeller}>Pay</button>
             <a class="cancel" onClick={()=>{

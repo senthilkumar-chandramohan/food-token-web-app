@@ -6,8 +6,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import webPush from 'web-push';
 import { sendToken, getBalance, getTransactionHistory } from './modules/index.js';
-import { ACCOUNT_WALLET_MAP } from './utils/constants.js';
+import { ACCOUNT_DETAILS_MAP } from './utils/constants.js';
+import init from './modules/init.js';
+
+import './modules/txn-listener.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,8 +41,8 @@ app.post("/send-token", async (req, res) => {
     },
   } = req;
 
-  const fromWalletAddress = ACCOUNT_WALLET_MAP[fromAccountID];
-  const toWalletAddress = ACCOUNT_WALLET_MAP[toAccountID];
+  const fromWalletAddress = ACCOUNT_DETAILS_MAP[fromAccountID].wallet;
+  const toWalletAddress = ACCOUNT_DETAILS_MAP[toAccountID].wallet;
 
   console.log("fromWallet", fromWalletAddress);
   console.log("toWallet", toWalletAddress);
@@ -49,19 +53,75 @@ app.post("/send-token", async (req, res) => {
 
 app.get("/get-balance", async (req, res) => {
   const accountID = req.query.accountID;
-  const walletAddress = ACCOUNT_WALLET_MAP[accountID];
-  console.log(walletAddress);
+  const walletAddress = ACCOUNT_DETAILS_MAP[accountID].wallet;
+  console.log("wallet", walletAddress);
   const balance = await getBalance(walletAddress);
   res.json({ balance });
 });
 
 app.get("/get-txn-history", async (req, res) => {
   const accountID = req.query.accountID;
-  const walletAddress = ACCOUNT_WALLET_MAP[accountID];
-  console.log(walletAddress);
+  const walletAddress = ACCOUNT_DETAILS_MAP[accountID].wallet;
+  console.log("wallet", walletAddress);
   const txnHistory = await getTransactionHistory(walletAddress);
   res.json({ txnHistory });
 });
+
+app.get("/get-app-server-key", async (req, res) => {
+  const {
+    query: {
+      accountID,
+    }
+  } = req;
+
+  const vapidKeys = ACCOUNT_DETAILS_MAP[accountID].vapidKeys || webPush.generateVAPIDKeys();
+  const { publicKey } = vapidKeys;
+  console.log(vapidKeys);
+  
+  ACCOUNT_DETAILS_MAP[accountID].vapidKeys = vapidKeys;
+
+  console.log("Acount details", ACCOUNT_DETAILS_MAP);
+  const result = fs.writeFileSync(`${__dirname}\\utils\\resources\\ACCOUNT_DETAILS_MAP.json`, JSON.stringify(ACCOUNT_DETAILS_MAP));
+  console.log(result);
+
+  res.json({ publicKey });
+});
+
+
+app.post("/add-subscription", (req, res) => {
+  const {
+    body,
+    query: {
+      accountID,
+    }
+  } = req;
+
+  console.log('accountID', accountID);
+  console.log('body', body);
+
+  ACCOUNT_DETAILS_MAP[accountID].subscription = body;
+
+  console.log("Acount details", ACCOUNT_DETAILS_MAP);
+  const result = fs.writeFileSync(`${__dirname}\\utils\\resources\\ACCOUNT_DETAILS_MAP.json`, JSON.stringify(ACCOUNT_DETAILS_MAP));
+
+  const payload = JSON.stringify({ title: 'Push Notification Test' });
+
+  const vapidKeys = ACCOUNT_DETAILS_MAP[accountID].vapidKeys;
+  
+  webPush.setVapidDetails(
+    'mailto:your-email@example.com',
+    vapidKeys.publicKey,
+    vapidKeys.privateKey
+  );
+
+  console.log('subscription', body);
+  webPush.sendNotification(body, payload)
+    .catch(error => console.error(error));
+
+  res.json({status: 'success'});
+});
+
+init(__dirname);
 
 // app.listen(port, () => {
 //   console.log(`Listening to port on ${port}`);

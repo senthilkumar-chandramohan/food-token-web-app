@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import moment from 'moment';
 
 const TransactionHistory = () => {
     const [history, setHistory] = useState('...');
@@ -13,8 +14,8 @@ const TransactionHistory = () => {
             }).then((response) => {
                 response.json().then(parsedJson => {
                     // code that can access both here
-                    console.log(parsedJson);
-                    setHistory(parsedJson.txnHistory.result);
+                    console.log("parsedJson", parsedJson);
+                    setHistory(parsedJson.txnHistory);
                 })
                 
             }).catch((err) => {
@@ -33,15 +34,39 @@ const TransactionHistory = () => {
                     {
                         history === '...'?
                         <p>Loading Transaction History...</p>:
-                        history.map((transaction) => (
-                            <div>
-                                <h4>Block Hash: {transaction.blockHash}</h4>
-                                <h4>Txn Hash: {transaction.hash}</h4>
-                                <p>To: {transaction.to}</p>
-                                <p>Value: {transaction.value/1000000000000000000}</p>
-                                <br/><br/>
-                            </div>
-                        ))
+                        <>
+                            <h2>Transaction History</h2>
+                            <table>
+                                <tr>
+                                    <th>Date/Time</th>
+                                    <th>Type</th>
+                                    <th>Credit From/Payment to</th>
+                                    <th>Amount</th>
+                                    <th>Txn Details</th>
+                                </tr>
+                                {
+                                    history.map((transaction) => {
+                                        const {
+                                            timeStamp,
+                                            txnType,
+                                            to,
+                                            value,
+                                            hash,
+                                        } = transaction;
+
+                                        return (
+                                            <tr>
+                                                <td>{moment(parseInt(timeStamp)*1000).format("DD-MM-YYYY h:mm:ss A")}</td>
+                                                <td>{txnType}</td>
+                                                <td>{txnType === 'PAYMENT' ? to : 'EMPLOYER'}</td>
+                                                <td>{value}</td>
+                                                <td><a href={`https://goerli.etherscan.io/tx/${hash}`} target="_blank">Link</a></td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </table>
+                        </>
                     }
                 </div>
             </div>
