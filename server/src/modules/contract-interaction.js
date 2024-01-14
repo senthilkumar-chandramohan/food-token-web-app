@@ -6,7 +6,7 @@ dotenv.config();
 const sendToken = async (sender, receiver, amount, note) => {
     const web3 = getWeb3Instance();
 
-    const contract = new web3.eth.Contract(
+    const contract = new web3.eth.Contract (
         constants.CONTRACT_ABI,
         constants.CONTRACT_ADDRESS,
     );
@@ -19,6 +19,7 @@ const sendToken = async (sender, receiver, amount, note) => {
     const gasPrice = await web3.eth.getGasPrice();
     const data = txn.encodeABI();
     const nonce = await web3.eth.getTransactionCount(constants.SYSTEM_WALLET);
+    const chainId = process.env.CHAIN_ID;
 
     console.log('\n gas:', gas);
     console.log('\n gasPrice:', gasPrice);
@@ -30,7 +31,7 @@ const sendToken = async (sender, receiver, amount, note) => {
         gas,
         gasPrice,
         nonce,
-        chainId: 5,
+        chainId,
     }, constants.PRIVATE_KEY);
 
     const receipt = await web3.eth.sendSignedTransaction(signedTxn.rawTransaction);
@@ -50,8 +51,10 @@ const getBalance = async (address) => {
 };
 
 const getTransactionHistory = async (address) => {
-    const apiKey="VVCPGMJQZ2IZ2FQUT7K79HS2K4SEA6AVB9";
-    const reqUrl=`https://api-goerli.etherscan.io/api?module=account&action=tokentx&address=${address}&sort=desc&apikey=${apiKey}`;
+    const apiKey = process.env.POLYGONSCAN_API_KEY || "MKHDP67XY9R3G881TA2WA3IHV8BEMF599X";
+    // const apiKey="VVCPGMJQZ2IZ2FQUT7K79HS2K4SEA6AVB9"; Etherscan API Key
+    const reqUrl=`https://api-testnet.polygonscan.com/api?module=account&action=tokentx&address=${address}&sort=desc&apikey=${apiKey}`;
+    // const reqUrl=`https://api-goerli.etherscan.io/api?module=account&action=tokentx&address=${address}&sort=desc&apikey=${apiKey}`;
 
     const response = await fetch(reqUrl, { method: 'GET' });
     const responseJSON = await response.json();

@@ -6,10 +6,8 @@ import { constants } from '../utils/index.js';
 dotenv.config();
 
 (async () => {
-    const network = process.env.ETHEREUM_NETWORK || "goerli";
-    const provider = new ethers.providers.WebSocketProvider(
-        `wss://${network}.infura.io/ws/v3/${process.env.INFURA_API_KEY}`
-    );
+//    const network = process.env.ETHEREUM_NETWORK || "goerli";
+    const provider = new ethers.providers.WebSocketProvider(process.env.POLYGON_WS_PROVIDER);
 
     const contract = new ethers.Contract(constants.CONTRACT_ADDRESS, constants.CONTRACT_ABI, provider);
     contract.on("Transfer", (from, to, value, event) => {

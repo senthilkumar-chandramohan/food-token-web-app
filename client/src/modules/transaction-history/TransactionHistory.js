@@ -60,7 +60,7 @@ const TransactionHistory = () => {
                                                 <td>{txnType}</td>
                                                 <td>{txnType === 'PAYMENT' ? to : 'EMPLOYER'}</td>
                                                 <td>{value}</td>
-                                                <td><a href={`https://goerli.etherscan.io/tx/${hash}`} target="_blank">Link</a></td>
+                                                <td><a href={`https://mumbai.polygonscan.com/tx/${hash}`} target="_blank">Link</a></td>
                                             </tr>
                                         )
                                     })

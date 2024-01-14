@@ -3,10 +3,11 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 
-const CONTRACT_ADDRESS = "0x984Fc7F05A24Cb8FE4f3E3067452F1cE74379B3a";
+// const CONTRACT_ADDRESS = "0x984Fc7F05A24Cb8FE4f3E3067452F1cE74379B3a"; Goerli
+const CONTRACT_ADDRESS = "0x9D30A06cdB7e17e9CFe99581d1806c9b538A7b20";
 
 const SYSTEM_WALLET = '0xb83E6644Dc27CBfE9e4F6Bd5128dCAcc419b86Db';
-const PRIVATE_KEY = process.env.PRIVATE_KEY || '98aef9b63894fae74ac3818e3c987391e75114688644841e2c405fdc9d0ca2df';
+const PRIVATE_KEY = process.env.SIGNER_PRIVATE_KEY || '98aef9b63894fae74ac3818e3c987391e75114688644841e2c405fdc9d0ca2df';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,13 +24,13 @@ const ACCOUNT_DETAILS_MAP = JSON.parse(data);
 // };
 
 const WALLET_NAME_MAP = {
-	"0x257eba064f5e16216a97b450340ea7b4f9f30d20": "Senthil Catering Service",
-	"0xc063b54128a263d4e1231accc600b20559122ee4": "Shobana S"
+	"0xe0dfe8ac359bc2da603af1b1530e20ce51234e8c": "Senthil Catering Service",
+	"0xeeedab9cac42ad100dbed36a1467ae545f83c6fc": "Shobana S"
 };
 
 const WALLET_ACCOUNT_ID_MAP = {
-	"0x257eBa064F5e16216A97B450340eA7b4F9f30D20": "9962589489",
-	"0xC063B54128a263D4e1231aCcc600B20559122ee4": "9940213539"
+	"0xE0dFE8AC359BC2DA603af1B1530E20cE51234E8C": "9962589489",
+	"0xEEEDab9cAc42Ad100dBed36A1467ae545F83C6Fc": "9940213539"
 };
 
 const CONTRACT_ABI = [
